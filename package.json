@@ -40,7 +40,14 @@
   },
   "homepage": "https://github.com/nisaprmst/ta-autoscaler#readme",
   "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/node": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
     "@kubernetes/client-node": "^0.16.3",
-    "eslint": "^8.10.0"
+    "eslint": "^8.10.0",
+    "node-schedule": "^2.1.0",
+    "nodemon": "^2.0.15"
   }
 }

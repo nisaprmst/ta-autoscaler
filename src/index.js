@@ -1,13 +1,10 @@
 import '@babel/register';
 import '@babel/polyfill';
-import 'reflect-metadata';
 import Scheduler from './workers/scheduler';
-import CreateK8sApi from './connection/kubernetes';
+import k8sApi from './connection/kubernetes';
 
 
 console.log('STARTING SCHEDULER');
-
-const k8sApi = CreateK8sApi();
 
 try {
   // Worker
@@ -15,11 +12,7 @@ try {
   scheduler.start();
 
   process.on('SIGINT', function () { 
-    scheduler.gracefulShutdown()
-    .then(() => {
-      console.log(`${new Date().toISOString()} - Scheduler is cancelled`);
-      process.exit(0);
-    })
+    scheduler.cancel();
   });
 } catch (error) {
   console.log(error);

@@ -5,14 +5,17 @@ class Kubernetes {
     this.k8sApi = k8sApi;
   }
 
-  async scale(namespace, name, replicas) {
+  async scale(namespace, name) {
     try {
       // find the particular deployment
       const res = await this.k8sApi.readNamespacedDeployment(name, namespace);
       let deployment = res.body;
-    
+      console.log(deployment.spec.replicas);
+
       // edit
+      const replicas = deployment.spec.replicas + 1;
       deployment.spec.replicas = replicas;
+
     
       // replace
       await k8sApi.replaceNamespacedDeployment(name, namespace, deployment);

@@ -1,17 +1,15 @@
 module.exports = Object.freeze({
 	CLUSTER: {
-		name: 'my-server',
-		server: 'http://server.com'
+		name: 'gke_stei-rpl-13518085_asia-southeast2-a_ms-sock-shop',
+		server: 'https://34.101.92.253'
 	},
 	USER: {
-		name: 'me',
-		password: 'password'
+		name: 'annisa',
 	},
 	CONTEXT: {
-		name: 'my-context',
-		user: 'me',
-		cluster: 'my-server'
+		name: 'gke_stei-rpl-13518085_asia-southeast2-a_ms-sock-shop',
+		user: 'annisa',
+		cluster: 'https://34.101.92.253'
 	},
-	NAMESPACE: 'dipsy',
-	REPLICAS: 'LALA'
+	NAMESPACE: 'sock-shop'
 });

@@ -8,7 +8,7 @@ export default () => ({
   start: () => {
     try {
       const autoscalerJob = scheduleJob(AUTOSCALER_CRON, () => autoscale());
-      console.log(`Product Indexer: ${AUTOSCALER_CRON}, will run at ${autoscalerJob.nextInvocation()}`);
+      console.log(`Autoscaler: ${AUTOSCALER_CRON}, will run at ${autoscalerJob.nextInvocation()}`);
     } catch (error) {
       console.log('Scheduler', { error });
     }

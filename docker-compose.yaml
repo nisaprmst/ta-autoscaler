@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  bootstrap-indexer:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.dev
+    image: bootstrap-indexer:v1.0.0
+    container_name: bootstrap-indexer
+    ports:
+      - '8100:8100'
+    restart: on-failure
+    command: npm run docker-dev
+    logging:
+      options:
+        max-size: '50m'
+        max-file: '5'
+    volumes:
+      - ./temp:/usr/src/app/temp
+      - ./logs/indexer:/usr/src/app/logs

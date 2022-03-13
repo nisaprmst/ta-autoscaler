@@ -1,0 +1,45 @@
+{
+  "name": "ta-autoscaler",
+  "version": "1.0.0",
+  "description": "This is a autoscaler that monitor Kubernetes service and calculating response time then scale up the pods if the response time is higher than a threshold",
+  "main": "src/app",
+  "scripts": {
+    "build": "babel src -s -D -d dist",
+    "dev": "set DEBUG=API:99%USAHAKU_API_V2&& set NODE_ENV=development&&nodemon ./src --exec babel-node",
+    "production": "DEBUG=API:99%USAHAKU_API_V2  NODE_ENV=production node ./dist && npm run job-removeUnusedFiles-production",
+    "job-removeUnusedFiles-dev": "DEBUG=JOB:RMFILES NODE_ENV=development babel-node --presets @babel/preset-env src/jobs/removeUnusedFiles.js",
+    "job-removeUnusedFiles-production": "DEBUG=JOB:RMFILES  NODE_ENV=production node dist/jobs/removeUnusedFiles.js",
+    "start": "npm run production",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src/js"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-regenerator",
+      "@babel/plugin-syntax-async-generators"
+    ],
+    "ignore": [
+      "node_modules",
+      "dist"
+    ]
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nisaprmst/ta-autoscaler.git"
+  },
+  "author": "Annisa Ayu Pramesti <nisaprmst@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nisaprmst/ta-autoscaler/issues"
+  },
+  "homepage": "https://github.com/nisaprmst/ta-autoscaler#readme",
+  "devDependencies": {
+    "eslint": "^8.10.0"
+  }
+}

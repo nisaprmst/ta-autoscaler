@@ -3,7 +3,6 @@ FROM node:10.22.0 AS base
 WORKDIR /app
 COPY ./package.json ./package-lock.json /app/
 RUN npm install --production=true
-COPY ./config /app/config
 COPY ./src /app/src
 RUN npm run build
 
@@ -13,7 +12,6 @@ RUN chgrp -R 0 /usr/src/app && chmod -R g=u /usr/src/app
 WORKDIR /usr/src/app
 
 COPY --from=base /app/dist /usr/src/app/dist
-COPY --from=base /app/config /usr/src/app/config
 COPY --from=base /app/package.json /usr/src/app/package.json
 COPY --from=base /app/package-lock.json /usr/src/app/package-lock.json
 COPY --from=base /app/node_modules /usr/src/app/node_modules

@@ -1,15 +1,15 @@
 version: '3.7'
 services:
-  bootstrap-indexer:
+  custom-autoscaler:
     build:
       context: ./
-      dockerfile: ./Dockerfile.dev
-    image: bootstrap-indexer:v1.0.0
-    container_name: bootstrap-indexer
+      dockerfile: ./Dockerfile
+    image: custom-autoscaler:v1.0.0
+    container_name: custom-autoscaler
     ports:
-      - '8100:8100'
+      - '4000:4000'
     restart: on-failure
-    command: npm run docker-dev
+    command: npm run docker
     logging:
       options:
         max-size: '50m'

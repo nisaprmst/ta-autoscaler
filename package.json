@@ -11,7 +11,8 @@
     "job-removeUnusedFiles-production": "DEBUG=JOB:RMFILES  NODE_ENV=production node dist/jobs/removeUnusedFiles.js",
     "start": "npm run production",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/js"
+    "lint": "eslint src/js",
+    "docker": "NODE_ENV=production node ./dist"
   },
   "babel": {
     "presets": [
@@ -40,11 +41,18 @@
   },
   "homepage": "https://github.com/nisaprmst/ta-autoscaler#readme",
   "devDependencies": {
-    "@babel/cli": "^7.1.2",
-    "@babel/core": "^7.1.2",
-    "@babel/node": "^7.0.0",
-    "@babel/polyfill": "^7.0.0",
-    "@babel/preset-env": "^7.1.0",
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "@kubernetes/client-node": "^0.16.3",
+    "eslint": "^8.10.0",
+    "node-schedule": "^2.1.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
     "@kubernetes/client-node": "^0.16.3",
     "eslint": "^8.10.0",
     "node-schedule": "^2.1.0",

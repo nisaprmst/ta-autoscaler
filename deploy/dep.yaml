@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: custom-autoscaler
+  labels:
+    name: custom-autoscaler
+  namespace: autoscaler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: custom-autoscaler
+  template:
+    metadata:
+      labels:
+        name: custom-autoscaler
+    spec:
+      containers:
+      - name: custom-autoscaler
+        image: nisaprmst/ta-autoscaler:latest
+        resources:
+          limits:
+            cpu: 500m
+            memory: 500Mi
+          requests:
+            cpu: 100m
+            memory: 300Mi
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        beta.kubernetes.io/os: linux

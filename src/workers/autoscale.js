@@ -13,7 +13,6 @@ export default async ({ k8sApi }) => {
 
     // get threshold dari constant --> divariasiin
     const response_time_threshold = THRESHOLD; //500
-
     console.log('response time prediction :', response_time_prediction);
     console.log('response time threshold  :', response_time_threshold);
     // bandingin response time sama threshold

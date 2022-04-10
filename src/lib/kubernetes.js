@@ -10,15 +10,13 @@ class Kubernetes {
       // find the particular deployment
       const res = await this.k8sApi.readNamespacedDeployment(name, namespace);
       let deployment = res.body;
-      console.log(deployment.spec.replicas);
-
       // edit
       const replicas = deployment.spec.replicas + 1;
       deployment.spec.replicas = replicas;
-
     
       // replace
-      await k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
+      await this.k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
+      console.log('success scaling deployment:', name);
     } catch (error) {
       console.log('lib-Kubernetes-scale', error);
     }

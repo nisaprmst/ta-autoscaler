@@ -16,7 +16,9 @@ module.exports = Object.freeze({
 	CLUSTER: [
 		{
 			name: 'minikube',
-			server: 'https://192.168.49.2:8443'
+			server: 'https://192.168.49.2:8443',
+			// skipTLSVerify: true,
+			caFile: '/home/annisa/.minikube/ca.crt'
 		}
 	],
 	DEPLOYMENT: {

@@ -13,6 +13,6 @@ kc.loadFromOptions({
     contexts: CONTEXT,
     currentContext: CURRENT
 });
-const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
 export default k8sApi;
 

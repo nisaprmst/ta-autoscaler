@@ -1,8 +1,27 @@
 module.exports = Object.freeze({
-	CONTEXT: {
-		name: 'gke_stei-rpl-13518085_asia-southeast1-b_ta-custom',
-		user: 'gke_stei-rpl-13518085_asia-southeast1-b_ta-custom',
-		cluster: 'gke_stei-rpl-13518085_asia-southeast1-b_ta-custom'
+	CONTEXT: [
+		{
+			cluster: 'minikube',
+			user: 'minikube',
+			name: 'minikube'
+		}
+	],
+	USER: [
+		{
+			name: 'minikube',
+			certFile: '/home/annisa/.minikube/profiles/minikube/client.crt',
+			keyFile: '/home/annisa/.minikube/profiles/minikube/client.key'
+		}
+	],
+	CLUSTER: [
+		{
+			name: 'minikube',
+			server: 'https://192.168.49.2:8443'
+		}
+	],
+	DEPLOYMENT: {
+		order: 'orders'
 	},
+	CURRENT: 'minikube',
 	NAMESPACE: 'sock-shop'
 });

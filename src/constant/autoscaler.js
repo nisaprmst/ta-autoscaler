@@ -1,4 +1,4 @@
 module.exports = Object.freeze({
-	AUTOSCALER_CRON: '*/1 * * * *',
+	AUTOSCALER_CRON: '*/15 * * * * *',
 	THRESHOLD: 500
 });

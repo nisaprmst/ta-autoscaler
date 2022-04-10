@@ -2,7 +2,7 @@ import Kubernetes from '../lib/kubernetes';
 
 const { THRESHOLD } = require('../constant/autoscaler');
 const {
-  CLUSTER,
+  DEPLOYMENT,
   NAMESPACE
 } = require('../constant/kubernetes');
 
@@ -20,7 +20,7 @@ export default async ({ k8sApi }) => {
     if (response_time_prediction > response_time_threshold) {
       // kalau lebih besar scale up
       const k8s = new Kubernetes({ k8sApi });
-      await k8s.scale(NAMESPACE, CLUSTER.name)
+      await k8s.scale(NAMESPACE, DEPLOYMENT.order);
     }
   } catch (error) {
     console.log('autoscaler scheduler', error);

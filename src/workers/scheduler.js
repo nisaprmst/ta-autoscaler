@@ -15,7 +15,7 @@ export default ({ k8sApi }) => ({
   },
   cancel: () => {
     Object.values(scheduledJobs).forEach(job => {
-      console.log('Cancel Schedule', { name: job.name });
+      console.log('Cancel Schedule', { name: job.n });
       return scheduledJobs[job.name].cancel();
     });
   }

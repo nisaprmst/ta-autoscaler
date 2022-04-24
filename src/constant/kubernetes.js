@@ -4,11 +4,21 @@ module.exports = Object.freeze({
 			cluster: 'minikube',
 			user: 'minikube',
 			name: 'minikube'
+		},
+		{
+			cluster: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom',
+			user: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom',
+			name: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom'
 		}
 	],
 	USER: [
 		{
 			name: 'minikube',
+			certFile: '/home/annisa/.minikube/profiles/minikube/client.crt',
+			keyFile: '/home/annisa/.minikube/profiles/minikube/client.key'
+		},
+		{
+			name: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom',
 			certFile: '/home/annisa/.minikube/profiles/minikube/client.crt',
 			keyFile: '/home/annisa/.minikube/profiles/minikube/client.key'
 		}
@@ -19,11 +29,23 @@ module.exports = Object.freeze({
 			server: 'https://192.168.49.2:8443',
 			// skipTLSVerify: true,
 			caFile: '/home/annisa/.minikube/ca.crt'
+		},
+		{
+			name: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom',
+			server: 'https://34.87.111.233'
+			// skipTLSVerify: true,
+			// caFile: '/home/annisa/.minikube/ca.crt'
 		}
 	],
 	DEPLOYMENT: {
-		order: 'orders'
+		ORDERS: 'orders',
+		CARTS: 'carts',
+		SHIPPING: 'shipping',
+		FRONTEND: 'front-end',
+		PAYMENT: 'payment',
+		CATALOGUE: 'catalogue',
+		USER: 'user'
 	},
-	CURRENT: 'minikube',
+	CURRENT: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom',
 	NAMESPACE: 'sock-shop'
 });

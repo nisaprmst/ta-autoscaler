@@ -38,13 +38,30 @@ module.exports = Object.freeze({
 		}
 	],
 	DEPLOYMENT: {
-		ORDERS: 'orders',
-		CARTS: 'carts',
-		SHIPPING: 'shipping',
-		FRONTEND: 'front-end',
-		PAYMENT: 'payment',
-		CATALOGUE: 'catalogue',
-		USER: 'user'
+		ORDERS: {
+			NAME: 'orders'
+		},
+		CARTS: {
+			NAME:'carts'
+		},
+		SHIPPING: {
+			NAME:'shipping'
+		},
+		FRONTEND: {
+			NAME:'front-end'
+		},
+		PAYMENT: {
+			NAME:'payment'
+		},
+		CATALOGUE: {
+			NAME:'catalogue'
+		},
+		USER: {
+			NAME:'user'
+		}
+	},
+	PROMETHEUS: {
+		ENDPOINT:''// isi endpoint prometheus
 	},
 	CURRENT: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom',
 	NAMESPACE: 'sock-shop'

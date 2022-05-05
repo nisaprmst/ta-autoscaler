@@ -1,5 +1,6 @@
 import Kubernetes from '../lib/kubernetes';
 
+const { getMetrics } = require('./metrics');
 const { THRESHOLDS, POD_NUMBER } = require('../constant/autoscaler');
 const {
   DEPLOYMENT,
@@ -28,13 +29,14 @@ async function autoscale({k8sApi, svm, thresholds, serviceName}) {
   try {
     // TODO: get response time prediction --> service order aja, order request aja
     const response_time_prediction = 0.6;
+    const prediction = await getMetrics(serviceName);
 
     const response_time_threshold = thresholds[serviceName];
     console.log(`response time ${serviceName}:`, response_time_prediction, response_time_threshold);
     // // bandingin response time sama threshold
     if (response_time_prediction > response_time_threshold) {
       const k8s = new Kubernetes({ k8sApi });
-      await k8s.scaleOut(NAMESPACE, DEPLOYMENT[serviceName], POD_NUMBER[serviceName].MAX);
+      await k8s.scaleOut(NAMESPACE, DEPLOYMENT[serviceName].NAME, POD_NUMBER[serviceName].MAX);
     }
   } catch (error) {
     console.log(`${serviceName} autoscaler scheduler`, error);

@@ -17,10 +17,29 @@ class Kubernetes {
         deployment.spec.replicas = replicas;
         // replace
         await this.k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
-        console.log('success scaling deployment:', name);
+        console.log('success scaling out deployment:', name);
       }
     } catch (error) {
-      console.log('lib-Kubernetes-scale', error);
+      console.log('lib-Kubernetes-scaleOut', error);
+    }
+  }
+
+  async scaleDown(namespace, name, min) {
+    try {
+      // find the particular deployment
+      const res = await this.k8sApi.readNamespacedDeployment(name, namespace);
+      let deployment = res.body;
+      // edit if above min
+      let replicas = deployment.spec.replicas;
+      if (replicas > min) {
+        replicas -= 1;
+        deployment.spec.replicas = replicas;
+        // replace
+        await this.k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
+        console.log('success scaling down deployment:', name);
+      }
+    } catch (error) {
+      console.log('lib-Kubernetes-scaleDown', error);
     }
   }
 }

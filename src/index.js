@@ -10,7 +10,7 @@ const { getThreshold } = require('./lib/autoscale');
 console.log('STARTING');
 
 const thresholds = getThreshold();
-console.log("memes", thresholds);
+console.log("THRESHOLD ALL:", thresholds);
 run()
 .then(models => {
   console.log(models);

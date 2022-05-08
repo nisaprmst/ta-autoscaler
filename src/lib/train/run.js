@@ -28,9 +28,7 @@ async function run() {
 	let svm = {};
 	await Promise.all(Object.keys(SERVICE).map(async s => {
 		let endpoint = {};
-		console.log("cape", s)
 		await Promise.all(Object.keys(SERVICE[s]).map(async e => {
-			console.log("end", e)
 			const model = await runService(s, e);
 			endpoint = {
 				...endpoint,

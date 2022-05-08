@@ -61,7 +61,7 @@ module.exports = Object.freeze({
 		}
 	},
 	PROMETHEUS: {
-		ENDPOINT:'localhost:8081'// isi endpoint prometheus
+		ENDPOINT:'10.52.11.226:9090'// isi endpoint prometheus
 	},
 	CURRENT: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom',
 	NAMESPACE: 'sock-shop'

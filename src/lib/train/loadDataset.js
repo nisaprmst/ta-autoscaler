@@ -1,17 +1,12 @@
-const {
-    X_TRAIN_FILE,
-    X_TEST_FILE,
-    Y_TRAIN_FILE,
-    Y_TEST_FILE
-} = require('../../constant/dataset');
+const { SERVICE } = require('../../constant/dataset');
 const BatchScaler = require('./batchScaler');
 const { transpose } = require('./util');
 
-const loadData = () => {
-    let X_train = require(X_TRAIN_FILE);
-    let X_test = require(X_TEST_FILE);
-    let y_train = require(Y_TRAIN_FILE);
-    let y_test = require(Y_TEST_FILE);
+const loadData = (serviceName, endpoint) => {
+    let X_train = require(SERVICE[serviceName][endpoint].X_TRAIN_FILE);
+    let X_test = require(SERVICE[serviceName][endpoint].X_TEST_FILE);
+    let y_train = require(SERVICE[serviceName][endpoint].Y_TRAIN_FILE);
+    let y_test = require(SERVICE[serviceName][endpoint].Y_TEST_FILE);
     X_train = Object.keys(X_train).map((key) => {
         let values = X_train[key];
         values = Object.keys(values).map(v => values[v]);

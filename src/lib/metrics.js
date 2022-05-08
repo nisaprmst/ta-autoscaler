@@ -4,16 +4,16 @@ const { QUERY } = require('../constant/metrics');
 
 async function getMetrics(serviceName) {
 	try {
-		const nodeMetrics = await getNodeMetrics();
-		const serviceMetrics = await getServiceMetrics();
-		const generalMetrics = await getGeneralMetrics();
-		const result = {
+		const { nodeMetrics, nodeResult } = await getNodeMetrics();
+		const { serviceMetrics, serviceResult } = await getServiceMetrics();
+		const metricsDict = {
 			...nodeMetrics,
-			...serviceMetrics,
-			...generalMetrics
+			...serviceMetrics
 		};
-		console.log('getMetrics:', result);
-		return result;
+		const metrics = [...nodeResult, ...serviceResult];
+		console.log('getMetrics metricsDict:', metricsDict);
+		console.log('getMetrics metrics:', metrics);
+		return { metrics, metricsDict };
 	} catch (error) {
 		console.log(`${serviceName} getMetrics`, error);
 	}
@@ -27,11 +27,15 @@ async function getNodeMetrics() {
 			const key = `${q}-node`;
 			nodeMetrics = {
 				...nodeMetrics,
-				[key]: promResult[0].value[1]
+				[key]: parseFloat(promResult[0].value[1])
 			};
 		}));
-		// console.log('node metrics:', nodeMetrics);
-		return nodeMetrics;
+		const nodeResult = [];
+		nodeResult.push(nodeMetrics['CPU-node']);
+		nodeResult.push(nodeMetrics['READ-node']);
+		nodeResult.push(nodeMetrics['WRITE-node']);
+		nodeResult.push(nodeMetrics['NETWORK-node']);
+		return { nodeMetrics, nodeResult };
 	} catch (error) {
 		console.log('getNodeMetrics', error);
 	}
@@ -46,35 +50,29 @@ async function getServiceMetrics() {
 				const key = `${q}-${el.metric.pod_set}`;
 				serviceMetrics = {
 					...serviceMetrics,
-					[key]: el.value[1]
+					[key]: parseFloat(el.value[1])
 				};
 			});
 		}));
-		// console.log('service metrics:', serviceMetrics);
-		return serviceMetrics;
+		const serviceResult = [];
+		const keys = [
+			'CPU-carts','CPU-carts-db','CPU-front-end','CPU-orders','CPU-orders-db','CPU-payment','CPU-shipping','CPU-user','CPU-user-db',
+			'NETWORK-carts','NETWORK-carts-db','NETWORK-front-end','NETWORK-orders','NETWORK-orders-db','NETWORK-payment','NETWORK-shipping','NETWORK-user','NETWORK-user-db',
+			'NUM_PODS-carts','NUM_PODS-carts-db','NUM_PODS-front-end','NUM_PODS-orders','NUM_PODS-orders-db','NUM_PODS-payment','NUM_PODS-shipping','NUM_PODS-user','NUM_PODS-user-db',
+			'REQUEST_RATE-carts','REQUEST_RATE-front-end','REQUEST_RATE-orders','REQUEST_RATE-payment','REQUEST_RATE-shipping','REQUEST_RATE-user'
+		];
+		keys.forEach(k => {
+			if (serviceMetrics[k]) {
+				serviceResult.push(serviceMetrics[k]);
+			} else {
+				if (k.startsWith('NUM_PODS')) serviceResult.push(1);
+				else serviceResult.push(0);
+			}
+		});
+		
+		return { serviceMetrics, serviceResult };
 	} catch (error) {
 		console.log('getServiceMetrics', error);
-	}
-};
-
-async function getGeneralMetrics() {
-	try {
-		let generalMetrics = {};
-		await Promise.all(Object.keys(QUERY.GENERAL).map(async q => {
-			const promResult = await getPrometheusMetrics(QUERY.GENERAL[q]);
-			promResult.forEach(el => {
-				const { name, route, status_code } = el.metric;
-				const key = `${q}-${name}-${route}-${status_code}`;
-				generalMetrics = {
-					...generalMetrics,
-					[key]: el.value[1]
-				};
-			});
-		}));
-		// console.log('general metrics:', generalMetrics);
-		return generalMetrics;
-	} catch (error) {
-		console.log('getGeneralMetrics', error);
 	}
 };
 

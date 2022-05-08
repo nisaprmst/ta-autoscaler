@@ -1,50 +1,75 @@
-import Kubernetes from '../lib/kubernetes';
-
 const { getMetrics } = require('./metrics');
-const { THRESHOLDS, POD_NUMBER } = require('../constant/autoscaler');
+const { THRESHOLDS, POD_NUMBER, MAPPING } = require('../constant/autoscaler');
 const {
   DEPLOYMENT,
   NAMESPACE
 } = require('../constant/kubernetes');
 
 
+// function getThreshold() {
+//   let max = {}
+//   for (let route of Object.keys(THRESHOLDS)) {
+//     const threshold = THRESHOLDS[route].THRESHOLD;
+//     for (let service of Object.keys(THRESHOLDS[route].THRESHOLD_PERCENTAGE)) {
+//       const percentage = THRESHOLDS[route].THRESHOLD_PERCENTAGE[service];
+//       const calculated = threshold * percentage / 100
+//       if (!(service in max)) max[service] = [];
+//       max[service].push(calculated);
+//     }
+//   }
+//   for (let service of Object.keys(max)) {
+//     max[service] = Math.max(...max[service]);
+//   }
+//   return max;
+// };
+
 function getThreshold() {
-  let max = {}
-  for (let route of Object.keys(THRESHOLDS)) {
-    const threshold = THRESHOLDS[route].THRESHOLD;
-    for (let service of Object.keys(THRESHOLDS[route].THRESHOLD_PERCENTAGE)) {
-      const percentage = THRESHOLDS[route].THRESHOLD_PERCENTAGE[service];
-      const calculated = threshold * percentage / 100
-      if (!(service in max)) max[service] = [];
-      max[service].push(calculated);
-    }
-  }
-  for (let service of Object.keys(max)) {
-    max[service] = Math.max(...max[service]);
-  }
-  return max;
-};
+  return THRESHOLDS;
+}
 
-async function autoscale({k8sApi, svm, thresholds, serviceName}) {
+async function autoscale({k8s, models, thresholds, serviceName}) {
   try {
-    // TODO: get response time prediction --> service order aja, order request aja
-    const response_time_prediction = 0.6;
-    const prediction = await getMetrics(serviceName);
+    // const response_time_prediction = 0.6;
+    const serviceModels = models[serviceName];
+    let upscale = false;
+    let downscale = true;
+    const { metrics, metricsDict } = await getMetrics(serviceName);
+    const predictions = [];
 
-    const response_time_threshold = thresholds[serviceName];
-    console.log(`response time ${serviceName}:`, response_time_prediction, response_time_threshold);
-    // // bandingin response time sama threshold
-    if (response_time_prediction > response_time_threshold) {
-      const k8s = new Kubernetes({ k8sApi });
+    // check request rate
+    const serviceRequestRate = metricsDict[`REQUEST_RATE-${MAPPING[serviceName]}`];
+    console.log(`serviceRequestRate ${serviceName}`, serviceRequestRate);
+
+    // check every endpoints
+    await Promise.all(Object.keys(serviceModels).map(endpoint => {
+      if (serviceRequestRate !== 0) {
+        const scale_out_threshold = thresholds[serviceName][endpoint];
+        const scale_down_threshold = scale_out_threshold * 0.5;
+        const svm = serviceModels[endpoint];
+        const response_time_prediction = svm.predictOne(metrics);
+        predictions.push(response_time_prediction);
+        if (response_time_prediction > scale_out_threshold) {
+          upscale = true;
+          // return;
+        }
+        if (response_time_prediction > scale_down_threshold) {
+          downscale = false;
+        }
+      }
+    }));
+    console.log(`${serviceName}:`, upscale, downscale, predictions);
+    // bandingin response time sama threshold
+    if (upscale) {
       await k8s.scaleOut(NAMESPACE, DEPLOYMENT[serviceName].NAME, POD_NUMBER[serviceName].MAX);
+    } else if (downscale) {
+      await k8s.scaleDown(NAMESPACE, DEPLOYMENT[serviceName].NAME, POD_NUMBER[serviceName].MIN);
     }
   } catch (error) {
     console.log(`${serviceName} autoscaler scheduler`, error);
-    // throw error;
   }
 };
 
 module.exports = {
-  autoscale,
-  getThreshold
+  getThreshold,
+  autoscale
 };

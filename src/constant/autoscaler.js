@@ -31,77 +31,37 @@ module.exports = Object.freeze({
 		}
 	},
 	THRESHOLDS: {
-		FE_ORDERS: {
-			THRESHOLD: 4,
-			THRESHOLD_PERCENTAGE: {
-				CARTS: 13.67,
-				CATALOGUE: 17.87,
-				FRONTEND: 13.04,
-				ORDERS: 13.72,
-				PAYMENT: 11,
-				SHIPPING: 16.59,
-				USER: 14.04
-			}
+		ORDERS: {
+			ORDERS: 0.5
 		},
-		FE_CART: {
-			THRESHOLD: 4,
-			THRESHOLD_PERCENTAGE: {
-				CARTS: 13.67,
-				CATALOGUE: 17.87,
-				FRONTEND: 13.04,
-				ORDERS: 13.72,
-				PAYMENT: 11,
-				SHIPPING: 16.59,
-				USER: 14.04
-			}
+		CARTS: {
+			REPOSITORY_ID: 0.5,
+			REPOSITORY_ID_PROPERTY: 0.5
 		},
-		FE_LOGIN: {
-			THRESHOLD: 4,
-			THRESHOLD_PERCENTAGE: {
-				CARTS: 13.67,
-				CATALOGUE: 17.87,
-				FRONTEND: 13.04,
-				ORDERS: 13.72,
-				PAYMENT: 11,
-				SHIPPING: 16.59,
-				USER: 14.04
-			}
-		},
-		FE_CATALOGUE: {
-			THRESHOLD: 4,
-			THRESHOLD_PERCENTAGE: {
-				CARTS: 13.67,
-				CATALOGUE: 17.87,
-				FRONTEND: 13.04,
-				ORDERS: 13.72,
-				PAYMENT: 11,
-				SHIPPING: 16.59,
-				USER: 14.04
-			}
+		FRONTEND: {
+			FRONTEND: 0.5,
+			CART: 0.5,
+			ORDERS: 0.5
 		},
 		SHIPPING: {
-			THRESHOLD: 4,
-			THRESHOLD_PERCENTAGE: {
-				CARTS: 13.67,
-				CATALOGUE: 17.87,
-				FRONTEND: 13.04,
-				ORDERS: 13.72,
-				PAYMENT: 11,
-				SHIPPING: 16.59,
-				USER: 14.04
-			}
-    },
-    USER: {
-			THRESHOLD: 4,
-			THRESHOLD_PERCENTAGE: {
-				CARTS: 13.67,
-				CATALOGUE: 17.87,
-				FRONTEND: 13.04,
-				ORDERS: 13.72,
-				PAYMENT: 11,
-				SHIPPING: 16.59,
-				USER: 14.04
-			}
-    }
+			SHIPPING: 0.5
+		},
+		PAYMENT: {
+			PAYMENTAUTH: 0.5
+		},
+		USER: {
+			ADDRESSES: 0.5,
+			CARDS: 0.5,
+			CUSTOMERS: 0.5
+		}
+	},
+	MAPPING: {
+		ORDERS: 'orders',
+		CARTS: 'carts',
+		FRONTEND: 'front-end',
+		SHIPPING: 'shipping',
+		PAYMENT: 'payment',
+		USER: 'user'
 	}
+	
 });

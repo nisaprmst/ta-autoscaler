@@ -23,8 +23,24 @@ const r2 = (y_true, y_pred) => {
     return (1 - (rss/tss));
 }
 
+const findVariance = (arr = []) => {
+    if(!arr.length){
+       return 0;
+    };
+    const sum = arr.reduce((acc, val) => acc + val);
+    const { length: num } = arr;
+    const median = sum / num;
+    let variance = 0;
+    arr.forEach(num => {
+       variance += ((num - median) * (num - median));
+    });
+    variance /= num;
+    return variance;
+ };
+
 module.exports = {
     transpose,
     mae,
-    r2
+    r2,
+    findVariance
 }

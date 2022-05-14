@@ -11,8 +11,8 @@ async function getMetrics(serviceName) {
 			...serviceMetrics
 		};
 		const metrics = [...nodeResult, ...serviceResult];
-		console.log('getMetrics metricsDict:', metricsDict);
-		console.log('getMetrics metrics:', metrics);
+		console.log(`${serviceName} getMetrics metricsDict:`, metricsDict);
+		console.log(`${serviceName}getMetrics metrics:`, metrics);
 		return { metrics, metricsDict };
 	} catch (error) {
 		console.log(`${serviceName} getMetrics`, error);
@@ -47,7 +47,8 @@ async function getServiceMetrics() {
 		await Promise.all(Object.keys(QUERY.SERVICE).map(async q => {
 			const promResult = await getPrometheusMetrics(QUERY.SERVICE[q]);
 			promResult.forEach(el => {
-				const key = `${q}-${el.metric.pod_set}`;
+				const key = q === 'REQUEST_RATE' ? `${q}-${el.metric.kubernetes_name}` : `${q}-${el.metric.pod_set}`;
+				console.log('key service', key);
 				serviceMetrics = {
 					...serviceMetrics,
 					[key]: parseFloat(el.value[1])

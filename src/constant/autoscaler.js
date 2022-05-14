@@ -32,27 +32,60 @@ module.exports = Object.freeze({
 	},
 	THRESHOLDS: {
 		ORDERS: {
-			ORDERS: 0.5
+			ORDERS: {
+				MAX: 0.55,
+				MIN: 0.2
+			}
 		},
 		CARTS: {
-			REPOSITORY_ID: 0.5,
-			REPOSITORY_ID_PROPERTY: 0.5
+			REPOSITORY_ID: {
+				MAX: 0.4,
+				MIN: 0.15
+			},
+			REPOSITORY_ID_PROPERTY: {
+				MAX: 0.4,
+				MIN: 0.2
+			},
 		},
 		FRONTEND: {
-			FRONTEND: 0.5,
-			CART: 0.5,
-			ORDERS: 0.5
+			FRONTEND: {
+				MAX: 1.0,
+				MIN: 0.65
+			},
+			CART: {
+				MAX: 0.3,
+				MIN: 0.1
+			},
+			ORDERS: {
+				MAX: 0.4,
+				MIN: 0.2
+			}
 		},
 		SHIPPING: {
-			SHIPPING: 0.5
+			SHIPPING: {
+				MAX: 0.5,
+				MIN: 0.2
+			}
 		},
 		PAYMENT: {
-			PAYMENTAUTH: 0.5
+			PAYMENTAUTH: {
+				MAX: 0.4,
+				MIN: 0.2
+			}
 		},
 		USER: {
-			ADDRESSES: 0.5,
-			CARDS: 0.5,
-			CUSTOMERS: 0.5
+			ADDRESSES: {
+				MAX: 0.4,
+				MIN: 0.2
+			},
+			CARDS: {
+				MAX: 0.4,
+				MIN: 0.2
+			},
+			CUSTOMERS: {
+				MAX: 0.6,
+				MIN: 0.4
+			}
 		}
 	},
 	MAPPING: {

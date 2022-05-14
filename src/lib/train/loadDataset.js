@@ -30,6 +30,7 @@ const loadData = (serviceName, endpoint) => {
     y_train = Object.keys(y_train).map(v =>  y_train[v]);
 
     return {
+        batchScaler,
         X_train,
         X_test,
         y_train,

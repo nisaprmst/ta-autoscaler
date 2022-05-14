@@ -4,6 +4,7 @@ const {
   DEPLOYMENT,
   NAMESPACE
 } = require('../constant/kubernetes');
+const { transpose } = require('./train/util');
 
 
 // function getThreshold() {
@@ -42,11 +43,16 @@ async function autoscale({k8s, models, thresholds, serviceName}) {
 
     // check every endpoints
     await Promise.all(Object.keys(serviceModels).map(endpoint => {
-      if (serviceRequestRate !== 0) {
-        const scale_out_threshold = thresholds[serviceName][endpoint];
-        const scale_down_threshold = scale_out_threshold * 0.5;
-        const svm = serviceModels[endpoint];
-        const response_time_prediction = svm.predictOne(metrics);
+      if (serviceRequestRate) {
+        const scale_out_threshold = thresholds[serviceName][endpoint].MAX;
+        // const scale_down_threshold = scale_out_threshold - 0.2;
+        const scale_down_threshold = thresholds[serviceName][endpoint].MIN;
+        const { model: svm, batchScaler } = serviceModels[endpoint];
+        // scale first
+        let metrics_scaled = transpose([metrics])
+        metrics_scaled = batchScaler.transform(metrics_scaled)
+        metrics_scaled = transpose(metrics_scaled)
+        const response_time_prediction = svm.predictOne(metrics_scaled[0]);
         predictions.push(response_time_prediction);
         if (response_time_prediction > scale_out_threshold) {
           upscale = true;
@@ -57,7 +63,7 @@ async function autoscale({k8s, models, thresholds, serviceName}) {
         }
       }
     }));
-    console.log(`${serviceName}:`, upscale, downscale, predictions);
+    console.log(`${serviceName} result:`, upscale, downscale, predictions);
     // bandingin response time sama threshold
     if (upscale) {
       await k8s.scaleOut(NAMESPACE, DEPLOYMENT[serviceName].NAME, POD_NUMBER[serviceName].MAX);

@@ -66,7 +66,7 @@ module.exports = Object.freeze({
 				Y_TEST_FILE: '../../../dataset/y_test_request-duration-payment-paymentauth-200.json'
 			}
 		},
-    USER: {
+		USER: {
 			ADDRESSES: {
 				// addresses-200
 				X_TRAIN_FILE: '../../../dataset/X_train_request-duration-user-addresses-200.json',
@@ -88,6 +88,42 @@ module.exports = Object.freeze({
 				Y_TRAIN_FILE: '../../../dataset/y_train_request-duration-user-customers-200.json',
 				Y_TEST_FILE: '../../../dataset/y_test_request-duration-user-customers-200.json'
 			}
+		}
+	},
+	GAMMA: {
+		ORDERS: {
+			// /orders-201
+			ORDERS: 0.2230907643751767
+		},
+		CARTS: {
+			// /{repository}/{id}-202
+			REPOSITORY_ID: 0.22230810272161733,
+			// /{repository}/{id}/{property}-200
+			REPOSITORY_ID_PROPERTY: 0.2207935190866042
+		},
+		FRONTEND: {
+			// /-200
+			FRONTEND: 0.22181324987128015,
+			// /cart-202
+			CART: 0.2224555025228225,
+			// /orders-201
+			ORDERS: 0.22266108177377317
+		},
+		SHIPPING: {
+			// /shipping-201
+			SHIPPING: 0.23234108375594442
+		},
+		PAYMENT: {
+			// paymentauth-200
+			PAYMENTAUTH: 0.22355361107542293
+		},
+		USER: {
+			// addresses-200
+			ADDRESSES: 0.22315290040707997,
+			// cards-200
+			CARDS: 0.22300230894817658,
+			// customers-200
+			CUSTOMERS: 0.23133624036223221
 		}
 	}
 });

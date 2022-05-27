@@ -5,41 +5,39 @@ class Kubernetes {
     this.k8sApi = k8sApi;
   }
 
-  async scaleOut(namespace, name, max) {
+  async getCurrentDeployment(namespace, name) {
     try {
-      // find the particular deployment
       const res = await this.k8sApi.readNamespacedDeployment(name, namespace);
       let deployment = res.body;
-      // edit if below max
-      let replicas = deployment.spec.replicas;
-      if (replicas < max) {
-        replicas += 1;
-        deployment.spec.replicas = replicas;
-        // replace
-        await this.k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
-        console.log('success scaling out deployment:', name);
-      }
+      console.log('success getting current deployment')
+      return deployment;
     } catch (error) {
-      console.log('lib-Kubernetes-scaleOut', error);
+      console.log('lib-Kubernetes-getCurrentReplicas', error);
     }
   }
 
-  async scaleDown(namespace, name, min) {
+  async scale(currDeployment, name, namespace, max, min, replicaCount) {
     try {
-      // find the particular deployment
-      const res = await this.k8sApi.readNamespacedDeployment(name, namespace);
-      let deployment = res.body;
-      // edit if above min
-      let replicas = deployment.spec.replicas;
-      if (replicas > min) {
-        replicas -= 1;
-        deployment.spec.replicas = replicas;
+      let deployment = currDeployment;
+      // scale if within pod threshold
+      const currentReplicas = deployment.spec.replicas;
+      console.log('replica count target and current:', replicaCount, currentReplicas);
+      if (replicaCount !== currentReplicas) {
+        let targetReplicas = replicaCount;
+        if (replicaCount > max) {
+          targetReplicas = max;
+        } else if (replicaCount < min) {
+          targetReplicas = min;
+        }
+        deployment.spec.replicas = targetReplicas;
         // replace
         await this.k8sApi.replaceNamespacedDeployment(name, namespace, deployment);
-        console.log('success scaling down deployment:', name);
+        console.log('success scaling deployment:', name);
+      } else {
+        console.log('not scaled:', name);
       }
     } catch (error) {
-      console.log('lib-Kubernetes-scaleDown', error);
+      console.log('lib-Kubernetes-scale', error);
     }
   }
 }

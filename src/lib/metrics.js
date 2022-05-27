@@ -19,6 +19,29 @@ async function getMetrics(serviceName) {
 	}
 };
 
+async function getResponseTime(serviceName) {
+	try {
+		const promResult = await getPrometheusMetrics(QUERY.RESPONSE_TIME[serviceName]);
+		const result = promResult.map(r => {
+			let endpoint = r.metric.route.toUpperCase();
+			endpoint = endpoint.toUpperCase().replace(/{/g, '');
+			endpoint = endpoint.toUpperCase().replace(/}/g, '');
+			if (endpoint[0] === '/') endpoint = endpoint.substring(1);
+			if (endpoint === '') endpoint = serviceName;
+			endpoint = endpoint.replace(/\//g, '_');
+			endpoint = endpoint.replace('/', '_');
+			return {
+				endpoint,
+				value: r.value[1]
+			};
+		});
+		console.log(`getResponseTime ${serviceName} result`, result);
+		return result;
+	} catch (error) {
+		console.log('getResponseTime', error);
+	}
+};
+
 async function getNodeMetrics() {
 	try {
 		let nodeMetrics = {};
@@ -92,5 +115,6 @@ async function getPrometheusMetrics(query) {
 };
   
 module.exports = {
-	getMetrics
+	getMetrics,
+	getResponseTime
 };

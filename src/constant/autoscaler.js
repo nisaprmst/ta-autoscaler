@@ -1,5 +1,12 @@
 module.exports = Object.freeze({
-	AUTOSCALER_CRON: '*/15 * * * * *',
+	AUTOSCALER_CRON: {
+		ORDERS: '*/7 * * * * *',
+		CARTS: '*/7 * * * * *',
+		FRONTEND: '*/7 * * * * *',
+		SHIPPING: '*/7 * * * * *',
+		PAYMENT: '*/8 * * * * *',
+		USER: '*/8 * * * * *',
+	},
 	POD_NUMBER: {
 		ORDERS: {
 			MAX: 10,
@@ -32,60 +39,27 @@ module.exports = Object.freeze({
 	},
 	THRESHOLDS: {
 		ORDERS: {
-			ORDERS: {
-				MAX: 0.55,
-				MIN: 0.2
-			}
+			ORDERS: 2
 		},
 		CARTS: {
-			REPOSITORY_ID: {
-				MAX: 0.4,
-				MIN: 0.15
-			},
-			REPOSITORY_ID_PROPERTY: {
-				MAX: 0.4,
-				MIN: 0.2
-			},
+			REPOSITORY_ID: 2,
+			REPOSITORY_ID_PROPERTY: 2
 		},
 		FRONTEND: {
-			FRONTEND: {
-				MAX: 1.0,
-				MIN: 0.65
-			},
-			CART: {
-				MAX: 0.3,
-				MIN: 0.1
-			},
-			ORDERS: {
-				MAX: 0.4,
-				MIN: 0.2
-			}
+			FRONTEND: 2,
+			CART: 2,
+			ORDERS: 2
 		},
 		SHIPPING: {
-			SHIPPING: {
-				MAX: 0.5,
-				MIN: 0.2
-			}
+			SHIPPING: 2
 		},
 		PAYMENT: {
-			PAYMENTAUTH: {
-				MAX: 0.4,
-				MIN: 0.2
-			}
+			PAYMENTAUTH: 2
 		},
 		USER: {
-			ADDRESSES: {
-				MAX: 0.4,
-				MIN: 0.2
-			},
-			CARDS: {
-				MAX: 0.4,
-				MIN: 0.2
-			},
-			CUSTOMERS: {
-				MAX: 0.6,
-				MIN: 0.4
-			}
+			ADDRESSES: 2,
+			CARDS: 2,
+			CUSTOMERS: 2
 		}
 	},
 	MAPPING: {

@@ -61,7 +61,7 @@ module.exports = Object.freeze({
 		}
 	},
 	PROMETHEUS: {
-		ENDPOINT:'10.68.8.17:9090'// isi endpoint prometheus
+		ENDPOINT:'10.52.11.214:9090'// isi endpoint prometheus
 		// ENDPOINT:'localhost:8081'// isi endpoint prometheus
 	},
 	CURRENT: 'gke_stei-rpl-13518085_asia-southeast1-a_ta-custom',

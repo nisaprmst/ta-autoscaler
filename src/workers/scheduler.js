@@ -12,23 +12,23 @@ const { scheduleJob, scheduledJobs } = schedule;
 export default ({ k8s, models, thresholds }) => ({
   start: () => {
     try {
-      const cartAutoscalerJob = scheduleJob(AUTOSCALER_CRON, () => cartAutoscale({ k8s, models, thresholds }));
-      console.log(`Cart Autoscaler: ${AUTOSCALER_CRON}, will run at ${cartAutoscalerJob.nextInvocation()}`);
+      const cartAutoscalerJob = scheduleJob(AUTOSCALER_CRON.CARTS, () => cartAutoscale({ k8s, models, thresholds }));
+      console.log(`Cart Autoscaler: ${AUTOSCALER_CRON.CARTS}, will run at ${cartAutoscalerJob.nextInvocation()}`);
 
-      const frontendAutoscalerJob = scheduleJob(AUTOSCALER_CRON, () => frontendAutoscale({ k8s, models, thresholds }));
-      console.log(`Frontend Autoscaler: ${AUTOSCALER_CRON}, will run at ${frontendAutoscalerJob.nextInvocation()}`);
+      const frontendAutoscalerJob = scheduleJob(AUTOSCALER_CRON.FRONTEND, () => frontendAutoscale({ k8s, models, thresholds }));
+      console.log(`Frontend Autoscaler: ${AUTOSCALER_CRON.FRONTEND}, will run at ${frontendAutoscalerJob.nextInvocation()}`);
 
-      const orderAutoscalerJob = scheduleJob(AUTOSCALER_CRON, () => orderAutoscale({ k8s, models, thresholds }));
-      console.log(`Order Autoscaler: ${AUTOSCALER_CRON}, will run at ${orderAutoscalerJob.nextInvocation()}`);
+      const orderAutoscalerJob = scheduleJob(AUTOSCALER_CRON.ORDERS, () => orderAutoscale({ k8s, models, thresholds }));
+      console.log(`Order Autoscaler: ${AUTOSCALER_CRON.ORDERS}, will run at ${orderAutoscalerJob.nextInvocation()}`);
 
-      const paymentAutoscalerJob = scheduleJob(AUTOSCALER_CRON, () => paymentAutoscale({ k8s, models, thresholds }));
-      console.log(`Payment Autoscaler: ${AUTOSCALER_CRON}, will run at ${paymentAutoscalerJob.nextInvocation()}`);
+      const paymentAutoscalerJob = scheduleJob(AUTOSCALER_CRON.PAYMENT, () => paymentAutoscale({ k8s, models, thresholds }));
+      console.log(`Payment Autoscaler: ${AUTOSCALER_CRON.PAYMENT}, will run at ${paymentAutoscalerJob.nextInvocation()}`);
 
-      const shippingAutoscalerJob = scheduleJob(AUTOSCALER_CRON, () => shippingAutoscale({ k8s, models, thresholds }));
-      console.log(`Shipping Autoscaler: ${AUTOSCALER_CRON}, will run at ${shippingAutoscalerJob.nextInvocation()}`);
+      const shippingAutoscalerJob = scheduleJob(AUTOSCALER_CRON.SHIPPING, () => shippingAutoscale({ k8s, models, thresholds }));
+      console.log(`Shipping Autoscaler: ${AUTOSCALER_CRON.SHIPPING}, will run at ${shippingAutoscalerJob.nextInvocation()}`);
 
-      const userAutoscalerJob = scheduleJob(AUTOSCALER_CRON, () => userAutoscale({ k8s, models, thresholds }));
-      console.log(`User Autoscaler: ${AUTOSCALER_CRON}, will run at ${userAutoscalerJob.nextInvocation()}`);
+      const userAutoscalerJob = scheduleJob(AUTOSCALER_CRON.USER, () => userAutoscale({ k8s, models, thresholds }));
+      console.log(`User Autoscaler: ${AUTOSCALER_CRON.USER}, will run at ${userAutoscalerJob.nextInvocation()}`);
     } catch (error) {
       console.log('Scheduler', { error });
     }

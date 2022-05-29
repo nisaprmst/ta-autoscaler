@@ -23,8 +23,6 @@ async function actualAutoscale({k8s, thresholds, serviceName}) {
     const deployment = await k8s.getCurrentDeployment(namespace, name);
     const currentReplicas = deployment.spec.replicas;
 
-    // const currentReplicas = 2;
-
     // check every endpoints
     let targetReplicas = 0;
     const actualResponseTime = [];
@@ -46,8 +44,8 @@ async function actualAutoscale({k8s, thresholds, serviceName}) {
 };
 
 async function autoscale({k8s, models, thresholds, serviceName}) {
-  // await predAutoscale({k8s, models, thresholds, serviceName});
-  await actualAutoscale({k8s, thresholds, serviceName});
+  await predAutoscale({k8s, models, thresholds, serviceName});
+  // await actualAutoscale({k8s, thresholds, serviceName});
 };
 
 async function predAutoscale({k8s, models, thresholds, serviceName}) {

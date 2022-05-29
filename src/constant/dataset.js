@@ -33,13 +33,6 @@ module.exports = Object.freeze({
 				Y_TRAIN_FILE: '../../../dataset/y_train_request-duration-front-end-_-200.json',
 				Y_TEST_FILE: '../../../dataset/y_test_request-duration-front-end-_-200.json'
 			},
-			CART: {
-				// /cart-202
-				X_TRAIN_FILE: '../../../dataset/X_train_request-duration-front-end-_cart-202.json',
-				X_TEST_FILE: '../../../dataset/X_test_request-duration-front-end-_cart-202.json',
-				Y_TRAIN_FILE: '../../../dataset/y_train_request-duration-front-end-_cart-202.json',
-				Y_TEST_FILE: '../../../dataset/y_test_request-duration-front-end-_cart-202.json'
-			},
 			ORDERS: {
 				// /orders-201
 				X_TRAIN_FILE: '../../../dataset/X_train_request-duration-front-end-_orders-201.json',
@@ -93,37 +86,35 @@ module.exports = Object.freeze({
 	GAMMA: {
 		ORDERS: {
 			// /orders-201
-			ORDERS: 0.2917848443710043
+			ORDERS: 0.3564354018516369
 		},
 		CARTS: {
 			// /{repository}/{id}-202
-			REPOSITORY_ID: 0.2988959521150008,
+			REPOSITORY_ID: 0.3939092906135015,
 			// /{repository}/{id}/{property}-200
-			REPOSITORY_ID_PROPERTY: 0.26595942143721524
+			REPOSITORY_ID_PROPERTY: 0.40581987925161095
 		},
 		FRONTEND: {
 			// /-200
-			FRONTEND: 0.2502422176309838,
-			// /cart-202
-			CART: 0.25219297793002854,
+			FRONTEND: 0.4059586461005309,
 			// /orders-201
-			ORDERS: 0.2744841733871622
+			ORDERS: 0.35232534475489347
 		},
 		SHIPPING: {
 			// /shipping-201
-			SHIPPING: 0.298550031181843
+			SHIPPING: 0.4087822746557316
 		},
 		PAYMENT: {
 			// paymentauth-200
-			PAYMENTAUTH: 0.2977595005257432
+			PAYMENTAUTH: 0.4078770941045663
 		},
 		USER: {
 			// addresses-200
-			ADDRESSES: 0.25419306918931817,
+			ADDRESSES: 0.39489742231861014,
 			// cards-200
-			CARDS: 0.31652651811967375,
+			CARDS: 0.39628644605255525,
 			// customers-200
-			CUSTOMERS: 0.2742819914644155
+			CUSTOMERS: 0.39637551861504433
 		}
 	}
 });

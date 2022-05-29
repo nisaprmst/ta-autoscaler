@@ -28,7 +28,7 @@ async function runService(serviceName, endpoint) {
 };
 
 async function run() {
-	return 0;
+	// return 0;
 	let svm = {};
 	await Promise.all(Object.keys(SERVICE).map(async s => {
 		let endpoint = {};

@@ -9,7 +9,7 @@ class Kubernetes {
     try {
       const res = await this.k8sApi.readNamespacedDeployment(name, namespace);
       let deployment = res.body;
-      console.log('success getting current deployment')
+      console.log(`${name} success getting current deployment:`, deployment.spec.replicas, deployment.status.replicas, deployment.status.unavailableReplicas, deployment.status.readyReplicas, deployment.status.updatedReplicas);
       return deployment;
     } catch (error) {
       console.log('lib-Kubernetes-getCurrentReplicas', error);

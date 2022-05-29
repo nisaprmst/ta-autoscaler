@@ -47,7 +47,6 @@ module.exports = Object.freeze({
 		},
 		FRONTEND: {
 			FRONTEND: 2,
-			CART: 2,
 			ORDERS: 2
 		},
 		SHIPPING: {
